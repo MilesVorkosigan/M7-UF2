@@ -1,4 +1,4 @@
-
+USE supermercat;
 
 CREATE TABLE usuari (
   id INT AUTO_INCREMENT PRIMARY KEY,

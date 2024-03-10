@@ -2,20 +2,23 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100vh;
   padding: 20px;
+  background-color: #ccc;
 }
-.containerSing{
+.prova{
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   height: 150vh;
   padding: 20px;
   flex-direction: row;
+  background-color: #f2f2f2;
   
 }
+
 form {
   display: flex;
   flex-direction: column;
