@@ -1,5 +1,5 @@
 <?php
-class metodos{
+class metodozs{
     public function mostrarDatos($sql){
         $c= new conectar();
         $conexion=$c->conexion();
