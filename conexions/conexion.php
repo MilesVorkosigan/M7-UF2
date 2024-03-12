@@ -1,17 +1,14 @@
 <?php 
+$servidor = "mysql::dbname=supermecat;host=127.0.0.1";
+$usuari="root";
+$pass ="rootpass";
 
-	class conectar{
-		private $servidor="localhost";
-		private $usuario="root";
-		private $bd="supermercat";
-		private $password="rootpass";
+try {
+	$pdo = new PDO($servidor,$usuari,$pass);
+	echo "Connectat..";
 
-		public function conexion(){
-			$conexion=mysqli_connect($this->servidor,
-									 $this->usuario,
-									 $this->password,
-									 $this->bd);
-			return $conexion;
-		}
+} catch (PDOException $e) {
+	echo "No conectar : ( ".$e->getMessage();
+}
 
-	}
+?>

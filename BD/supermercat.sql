@@ -2,8 +2,10 @@ USE supermercat;
 
 CREATE TABLE usuari (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  nom VARCHAR(250) NOT NULL UNIQUE,
+  name VARCHAR(250) NOT NULL UNIQUE,
   contrasenya VARCHAR(250) NOT NULL,
+  email VARCHAR(250) NOT NULL,
+  surname VARCHAR(250) NOT NULL,
   admin ENUM('0', '1')
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -34,5 +36,18 @@ INSERT INTO producte (id, nom, preu) VALUES (2, 'Pera', 0.99);
 INSERT INTO producte (id, nom, preu) VALUES (3, 'Raim', 3.99);
 INSERT INTO producte (id, nom, preu) VALUES (4, 'Patates', 1.99);
 INSERT INTO producte (id, nom, preu) VALUES (5, 'Tomaquet', 1.99);
+#falta la contrasenya amb valor encriptat
+
+INSERT INTO usuari (name, contrasenya, email, surname, admin) 
+VALUES ('usuari1', 'contrasenya1', 'usuari1@example.com', 'Cognom1', '0');
+
+INSERT INTO usuari (name, contrasenya, email, surname, admin) 
+VALUES ('usuari2', 'contrasenya2', 'usuari2@example.com', 'Cognom2', '0');
+
+INSERT INTO usuari (name, contrasenya, email, surname, admin) 
+VALUES ('usuari3', 'contrasenya3', 'usuari3@example.com', 'Cognom3', '1');
+
+INSERT INTO usuari (name, contrasenya, email, surname, admin) 
+VALUES ('usuari4', 'contrasenya4', 'usuari4@example.com', 'Cognom4', '1');
 
 

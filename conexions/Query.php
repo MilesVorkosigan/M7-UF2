@@ -1,5 +1,5 @@
 <?php
-class EntidadGenerica
+class Query
 {
 
     // <?php
@@ -23,7 +23,7 @@ class EntidadGenerica
     public function crear($dades)
     {
         //prepació de la consulta
-        $sql = "INSERT INTO $this->taula (" . implode(", ", array_keys($dades)) . ") VALUES (:" . implode(", :", array_keys($datos)) . ")";
+        $sql = "INSERT INTO $this->taula (" . implode(", ", array_keys($dades)) . ") VALUES (:" . implode(", :", array_keys($dades)) . ")";
         $stmt = $this->conexion->prepare($sql);
 
         //vincular les dades
@@ -71,7 +71,7 @@ class EntidadGenerica
         // Ejecutar la consulta
         $stmt->execute();
     }
-    public function obtener($id)
+    public function mostrar($id)
     {
         // Preparar la consulta
         $sql = "SELECT * FROM $this->taula WHERE id = :id";
@@ -98,7 +98,7 @@ class EntidadGenerica
         return $entidad;
     }
 
-    public function listar()
+    public function llistar($pdo,$taula)
     {
         // Consulta SQL para obtener todos los registros
         $sql = "SELECT * FROM $this->taula";

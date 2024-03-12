@@ -2,7 +2,8 @@
 class User
 {
     private  $name;
-    private $cognom;
+    private $surname;
+    private $email;
     private $adm;
     private $pass;
 
@@ -31,12 +32,20 @@ class User
     
     }
 
-	public function getCognom() {
-		return $this->cognom;
+    public function getSurname() {
+		return $this->surname;
 	}
 
-	public function setCognom($value) {
-		$this->cognom = $value;
+	public function setSurname($value) {
+		$this->surname = $value;
+	}
+
+	public function getEmail() {
+		return $this->email;
+	}
+
+	public function setEmail($value) {
+		$this->email = $value;
 	}
 
 	public function getAdm() {
@@ -48,6 +57,14 @@ class User
 	}
     
 
+
+
+	public function __constructor($name, $surname, $email, $adm, $pass) {
+
+		$this->name = $name;
+		$this->surname = $surname;
+		$this->email = $email;
+		$this->adm = $adm;
+		$this->pass = $pass;
+	}
 }
-
-
