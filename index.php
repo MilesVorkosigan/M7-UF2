@@ -10,8 +10,8 @@
     <link rel="icon" type="image/ico" href="imatges/favicon.ico" />
     <!--CSS-->
     <link rel="stylesheet" href="stylesCss/styles.css" type="text/css" />
-     <!--Bootstrap-->
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Start</title>
 </head>
 
@@ -21,8 +21,8 @@
             <h1>Supermercat Online</h1>
             <p>Select yours options</p>
             <div class="options">
-                <a href="login.php">Login</a> or
-                <a href="signup.php">SignUp</a>
+            <button type="button" class="btn btn-outline-primary">Log In</button>
+            <button type="button" class="btn btn-outline-primary">Sign Up</button>
             </div>
         </div>
     </div>
@@ -30,4 +30,5 @@
 </body>
 <!--script Bootstrap-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </html>
