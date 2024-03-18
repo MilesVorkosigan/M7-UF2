@@ -2,7 +2,7 @@
 define("USUARI", "admin"); //Definim nom d'usuari vàlid
 define("PASSWORD", "admin"); //Definim contrsenya vàlida
 if(isset($_POST['enviar'])){
-    //cas que hem omplert formulari
+    //cas que hem omplert formulari Acces
     if($_POST["usuari"] == USUARI && $_POST["contrasenya"] == PASSWORD){
         session_start();
         if(isset ($_POST["saveCookies"])){

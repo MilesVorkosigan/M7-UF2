@@ -1,7 +1,0 @@
-<?php
-abstract class BaseDades{
-    abstract public function guardar(array $registre);
-    abstract public function llegir();
-    abstract public function borrar();
-    abstract public function actualitzar();
-}

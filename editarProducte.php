@@ -1,14 +1,4 @@
-<?php 
 
-	require_once "conexion.php";
-	$obj= new conectar();
-	$conexion=$obj->conexion();
-	$id=$_GET['id'];
-	$sql="SELECT nom
-			from producte where id='$id'";
-	$result=mysqli_query($conexion,$sql);
-	$ver=mysqli_fetch_row($result);
- ?>
 
 <!DOCTYPE html>
 <html>
