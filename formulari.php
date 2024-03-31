@@ -1,224 +1,155 @@
 <?php
-$txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : "";
-$txtNom = (isset($_POST['txtNom'])) ? $_POST['txtNom'] : "";
-$txtCognoms = (isset($_POST['txtCognoms'])) ? $_POST['txtCognoms'] : "";
-$txtEmail = (isset($_POST['txtEmail'])) ? $_POST['txtEmail'] : "";
-$txtPass = (isset($_POST['txtPass'])) ? $_POST['txtPass'] : "";
+session_start();
+require_once ("./conexions/autoload.php");
+
 $accio = (isset($_POST['accio'])) ? $_POST['accio'] : "";
-include('./conexions/conexion.php');
+
 switch ($accio) {
-    case 'btnAfegir':
-        $sentencia =$pdo->prepare("INSERT INTO usuari (Nom, Cognoms, Email, Password) VALUES (:Nom, :Cognoms, :Email, :Contrasenya)");
-        // Aquí debes asignar valores a los marcadores de posición de la sentencia SQL
-        $sentencia->bindParam(':Nom', $txtNom);
-        $sentencia->bindParam(':Cognoms', $txtCognoms);
-        $sentencia->bindParam(':Email', $txtEmail);
-        $sentencia->bindParam(':Contrasenya', $txtPass);
-        $sentencia->execute();
-        break;
-    case 'btnEliminar':
-        # code...
-        break;
-    case 'btnCancelar':
-        # code...
-        break;
-    default:
-        # code...
-        break;
+  case 'btnAfegir':
+    // $txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : "";
+    $txtNom = (isset($_POST['txtNom'])) ? $_POST['txtNom'] : " no rebu";
+    $txtCognoms = (isset($_POST['txtCognoms'])) ? $_POST['txtCognoms'] : "";
+    $txtEmail = (isset($_POST['txtEmail'])) ? $_POST['txtEmail'] : "";
+    $txtPass = (isset($_POST['txtPass'])) ? $_POST['txtPass'] : "";
+    $txtTypeUser = (isset($_POST['typeUser'])) ? ($_POST['typeUser'] == "admin" ? 1 : 0) : 0;
+
+
+    if (!empty($txtNom)) {
+      $registre = new User($txtNom, $txtCognoms, $txtEmail, $txtTypeUser, $txtPass);
+      $bd = new UserDAO('usuari', $con);
+      $data=$registre->getData();
+      $bd->insert($data);
+    } else {
+      echo 'Error tenim un error btnAfegir';
+    }
+
+    // header("Location: login.php");
+    // exit;
+    break;
+  case 'btnEliminar':
+    header("Location: login.php");
+    echo "de";
+    break;
+  case 'btnCancelar':
+    header('Location : index.php');
+    break;
+  default:
+    # code...
+    echo 'default';
+    break;
 }
-//Cas que volem modificar un usuari
-  $sentencia=$pdo->prepare("SELECT * FROM 'usuari' WHERE id =1");
-  $sentencia->execute();
-  $llistaTreballadors=$sentencia
+
 ?>
 <!DOCTYPE html>
 <html lang="ca">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="author" content="Miles" />
-    <meta name="description" content="Treball Practica 1 M7" />
-    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <!--Favicon-->
-    <link rel="icon" type="image/ico" href="imatges/favicon.ico" />
-    <!--CSS-->
-    <link rel="stylesheet" href="stylesCss/stylesFormulari.css" type="text/css" />
-    <!--Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <meta charset="UTF-8" />
+  <meta name="author" content="Miles" />
+  <meta name="description" content="Treball Practica 1 M7" />
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <!--Favicon-->
+  <link rel="icon" type="image/ico" href="imatges/favicon.ico" />
+  <!--CSS-->
+  <link rel="stylesheet" href="stylesCss/stylesFormulari.css" type="text/css" />
+  <!--Bootstrap-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <title>Formulari</title>
+  <title>Formulari</title>
 </head>
 
 <body>
-    <div class="container">
-        <form action="" method="post" enctype="multipart/form-data">
-            <label for="">Nom :</label>
-            <input type="text" name="txtID" value="<?php echo $txtID; ?>" placeholder="" id="txtNom" require="">
-            <br>
-            <label for="">Nom :</label>
-            <input type="text" name="txtNom" value="<?php echo $txtNom; ?>" placeholder="" id="txtNom" require="">
-            <br>
-            <label for="">Cognoms:</label>
-            <input type="text" name="txtCognoms" value="<?php echo $txtCognoms; ?>" placeholder="" id="txtcognoms" require="">
-            <br>
-            <label for="">Correu :</label>
-            <input type="text" name="txtEmail" value="<?php echo $txtEmail; ?>" placeholder="" id="txtEmail" require="">
-            <br><label for="">Constrasenya :</label>
-            <input type="password" name="txtPass" value="<?php echo $txtPass; ?>" placeholder="" id="txtPass" require="">
-            <br>
-
-            <button value="btnAfegir" type="submit" name="accio">Aceptar</button>
-            <button value="btnEliminar" type="submit" name="accio">Eliminar</button>
-            <button value="btnCancelar" type="submit" name="accio">Cancelar</button>
-
-        </form>
-        <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">Dades Usuari</h4>
-        <form class="needs-validation" novalidate>
-          <div class="row g-3">
-            <div class="col-sm-6">
-              <label for="firstName" class="form-label">Nom</label>
-              <input type="text" class="form-control" id="firstName" placeholder="Nom Usuari" value="" required>
-              <div class="invalid-feedback">
-                Es necesari Nom.
-              </div>
-            </div>
-
-            <div class="col-sm-6">
-              <label for="lastName" class="form-label">Cognoms</label>
-              <input type="text" class="form-control" id="lastName" placeholder=" escriu Cognoms" value="" required>
-              <div class="invalid-feedback">
-                Es necesari Cognoms.
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="email" class="form-label">Email </label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com" value="" required>
-              <div class="invalid-feedback">
-                Please enter a valid email address for shipping updates.
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="address" class="form-label">Address</label>
-              <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="address2" class="form-label">Address 2 <span class="text-body-secondary">(Optional)</span></label>
-              <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-            </div>
-
-            <div class="col-md-5">
-              <label for="country" class="form-label">Country</label>
-              <select class="form-select" id="country" required>
-                <option value="">Choose...</option>
-                <option>United States</option>
-              </select>
-              <div class="invalid-feedback">
-                Please select a valid country.
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <label for="state" class="form-label">State</label>
-              <select class="form-select" id="state" required>
-                <option value="">Choose...</option>
-                <option>California</option>
-              </select>
-              <div class="invalid-feedback">
-                Please provide a valid state.
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="zip" class="form-label">Zip</label>
-              <input type="text" class="form-control" id="zip" placeholder="" required>
-              <div class="invalid-feedback">
-                Zip code required.
-              </div>
+  <div class="container">
+    <div class="col-md-7 col-lg-8">
+      <h4 class="mb-3">Dades Usuari</h4>
+      <form class="needs-validation" method="post">
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <label for="firstName" class="form-label">Nom</label>
+            <input type="text" class="form-control" id="firstName" placeholder="Nom Usuari" value="" name="txtNom"
+              required>
+            <div class="invalid-feedback">
+              Es necesari Nom.
             </div>
           </div>
 
+          <div class="col-sm-6">
+            <label for="lastName" class="form-label">Cognoms</label>
+            <input type="text" class="form-control" id="lastName" placeholder=" escriu Cognoms" value=""
+              name="txtCognoms" required>
+            <div class="invalid-feedback">
+              Es necesari Cognoms.
+            </div>
+          </div>
+
+          <div class="col-12">
+            <label for="email" class="form-label">Email </label>
+            <input type="email" class="form-control" id="email" placeholder="you@example.com" value="" name="txtEmail"
+              required>
+            <div class="invalid-feedback">
+              Please enter a valid email address for shipping updates.
+            </div>
+          </div>
+
+          <div class="col-12">
+            <label for="password" class="form-label">Contrasenya</label>
+            <input type="password" class="form-control" id="password" placeholder="" name="txtPass" required>
+            <div class="invalid-feedback">
+              Please enter your password.
+            </div>
+          </div>
+          <div class="col-md-5">
+            <label for="admin" class="form-label">Tipus Usuari</label>
+            <select class="form-select" id="typeUser" name="typeUser" value="" required>
+              <option value="">Escull</option>
+              <option value="admin">Administrador</option>
+              <option value="comp">Comprador</option>
+            </select>
+            <div class="invalid-feedback">
+              Please select type user.
+            </div>
+          </div>
           <hr class="my-4">
-
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="same-address">
-            <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-          </div>
-
           <div class="form-check">
             <input type="checkbox" class="form-check-input" id="save-info">
-            <label class="form-check-label" for="save-info">Save this information for next time</label>
+            <label class="form-check-label" for="save-info">Guarda l'informació</label>
           </div>
-
           <hr class="my-4">
+          <div class="buttons">
+            <button class="btn btn-success btn-lg" type="submit" name="accio" value="btnAfegir">Aceptar</button>
+            <button class="btn btn-primary btn-lg" type="button" name="accio" value="btnCancelar">Cancelar</button>
+            <button class="btn btn-danger btn-lg" type="button" name="accio" value="btnEliminar">Eliminar</button>
 
-          <h4 class="mb-3">Payment</h4>
-
-          <div class="my-3">
-            <div class="form-check">
-              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-              <label class="form-check-label" for="credit">Credit card</label>
-            </div>
-            <div class="form-check">
-              <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-              <label class="form-check-label" for="debit">Debit card</label>
-            </div>
-            <div class="form-check">
-              <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-              <label class="form-check-label" for="paypal">PayPal</label>
-            </div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#confirmar">
+              Eliminar
+            </button>
           </div>
-
-          <div class="row gy-3">
-            <div class="col-md-6">
-              <label for="cc-name" class="form-label">Name on card</label>
-              <input type="text" class="form-control" id="cc-name" placeholder="" required>
-              <small class="text-body-secondary">Full name as displayed on card</small>
-              <div class="invalid-feedback">
-                Name on card is required
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <label for="cc-number" class="form-label">Credit card number</label>
-              <input type="text" class="form-control" id="cc-number" placeholder="" required>
-              <div class="invalid-feedback">
-                Credit card number is required
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="cc-expiration" class="form-label">Expiration</label>
-              <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-              <div class="invalid-feedback">
-                Expiration date required
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="cc-cvv" class="form-label">CVV</label>
-              <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-              <div class="invalid-feedback">
-                Security code required
+          <!-- Modal -->
+          <div class="modal fade" id="confirmar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar elimininació</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  posar dades Usuari
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button value="btnEliminar" type="button" class="btn btn-primary" name="accio">Aceptar</button>
+                </div>
               </div>
             </div>
           </div>
-
-          <hr class="my-4">
-
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
-        </form>
-      </div>
+      </form>
     </div>
-
+  </div>
 </body>
 <!--script Bootstrap-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </html>

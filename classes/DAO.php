@@ -7,6 +7,7 @@ interface DAO
     public function update($id, $data);
     public function deleteById($id);
     public function listTable($table);
+    public function insert ($data);
 
 
 }

@@ -132,6 +132,34 @@ class GenericDAO implements DAO
         $this->conexion = $conexion;
         return $this;
     }
+    /**
+     *
+     * @param mixed $data
+     */
+ public function insert( $data) {
+    try {
+        $pdo = $this->conexion->getPdo();
+        $table=$this->table;
+        // Construir la consulta SQL dinámicamente
+        $columns = implode(', ', array_keys($data));
+        $placeholders = rtrim(str_repeat('?, ', count($data)), ', ');
+        $sql = "INSERT INTO $table ($columns) VALUES ($placeholders)";
+        
+        // Preparar la consulta SQL
+        $stmt = $pdo->prepare($sql);
+        
+        // Enlazar los valores del array asociativo a los parámetros de la consulta preparada
+        $values = array_values($data);
+        $stmt->execute($values);
+        
+        return true;
+    } catch (PDOException $e) {
+        // Manejar la excepción
+        echo "Error al insertar: " . $e->getMessage();
+        return false;
+    }
+}
+
 }
 
 

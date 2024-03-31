@@ -1,6 +1,8 @@
 <?php
 define("USUARI", "admin"); //Definim nom d'usuari vàlid
 define("PASSWORD", "admin"); //Definim contrsenya vàlida
+$valor(isset ($_POST['usuari'])) ? $_POST['txtNom'] : "";
+echo($valor." el valor" );
 if(isset($_POST['enviar'])){
     //cas que hem omplert formulari Acces
     if($_POST["usuari"] == USUARI && $_POST["contrasenya"] == PASSWORD){

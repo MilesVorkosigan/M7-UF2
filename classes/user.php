@@ -3,11 +3,13 @@
 // include ('./password.php');
 class User
 {
+	private $id;
 	private $name;
-	private $surname;
-	private $email;
-	private $adm;
 	private $pass;
+	private $email;
+	private $surname;	
+	private $adm;
+	
 	public function __construct($name, $surname, $email, $adm, $password)
 	{
 		$this->name = $name;
@@ -73,4 +75,31 @@ class User
 	{
 		return password_verify($contrasenyaEntrada, $this->pass);
 	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getId() {
+		return $this->id;
+	}
+	
+	/**
+	 * @param mixed $id 
+	 * @return self
+	 */
+	public function setId($id): self {
+		$this->id = $id;
+		return $this;
+	}
+	//Aquest metode esn prepara estament per la base de dades tal com la tenim configurada
+	public function getData()
+    {
+        return [
+            'name' => $this->name,
+            'contrasenya' => $this->pass,
+            'email' => $this->email,
+            'surname' => $this->surname,
+            'admin' => $this->adm
+        ];
+    }
 }

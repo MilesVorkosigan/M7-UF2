@@ -3,6 +3,7 @@ require_once "./conexions/autoload.php";
 class UserDAO extends GenericDAO
 {
 private $user;
+//nom de la columna
 private $USUARI='usuari';
 public function __construct($USUARI, $conexion)
     {

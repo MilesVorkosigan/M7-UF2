@@ -1,9 +1,17 @@
 <?php
-require_once "conexions/conexion.php";
+require_once "conexions/autoload.php";
 session_start();
+if (isset($_SESSION['user_id'])) {
+  //cas que tenim session oberta
+  header('Location: M5_aplicacio.php');
+}elseif (!empty($_POST['email']) && !empty($_POST['password'])) {
+  //cas que hagi omplert les dades
+}else{
+  //cas que tingui buit alguna part del formulari necesari
+}
+
 define("USUARI", "admin"); //Definim nom d'usuari vàlid
 define("PASSWORD", "admin"); //Definim contrsenya vàlida
-
 if (isset($_COOKIE["usuari"]) && isset($_COOKIE["contrasenya"])) {
 
 
