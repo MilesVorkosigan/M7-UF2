@@ -1,8 +1,9 @@
 <?php
 require_once ("./conexions/autoload.php");
-
-$userDAO = new UserDAO('usuari', $con);
-$llistaTreballadors = $userDAO->listTable('usuari');
+$userName = $sessUser->getCurrentUser();
+$daoUser = new DaoUser($con->getPdo());
+$buyers = $daoUser->getAllUsers();
+$user = $daoUser->getUserbyName($userName);
 
 ?>
 
@@ -25,41 +26,52 @@ $llistaTreballadors = $userDAO->listTable('usuari');
 </head>
 
 <body>
+    <h2>Benvingut usuari <?php echo $userName ?></h2>
     <div class="container">
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Alias</th>
                     <th scope="col">Nom</th>
-                    <th scope="col">Cognoms</th>
                     <th scope="col">Administrador</th>
                     <th scope="col">Accions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                foreach ($llistaTreballadors as $trelladdor) { ?>
-                    <tr class=<?php echo $trelladdor['admin'] == '0' ? "table-primary" : "table-warning"; ?>>
+                foreach ($buyers as $buyer) { ?>
+                    <tr class=<?php echo $buyer->getAdm() == '0' ? "table-primary" : "table-warning"; ?>>
                         <th scope="row">
-                            <?php echo $trelladdor['id'] ?>
+                            <?php echo $buyer->getId() ?>
                         </th>
                         <td>
-                            <?php echo $trelladdor['name'] ?>
+                            <?php echo $buyer->getName() ?>
                         </td>
                         <td>
-                            <?php echo $trelladdor['surname'] ?>
+                            <?php echo $buyer->getSurname() ?>
                         </td>
                         <td>
-                            <?php echo $trelladdor['admin'] == '1' ? "Administrador" : "Comprador"; ?>
+                            <?php echo $buyer->getAdm() == '1' ? "Administrador" : "Comprador"; ?>
                         </td>
                         <td>
-                            <a href="login.php" class="btn btn-outline-primary">Modificar</a>
-                            <a href="login.php" class="btn btn-outline-danger">Eliminar</a>
+                            <div <?php echo $user->getAdm() == '0' ? "hidden" : ""; ?>>
+                                <form method="POST" action="modificar.php" style="display: inline;">
+                                    <input type="hidden" name="modificate" value="<?php echo $buyer->getName(); ?>">
+                                    <button type="submit" class="btn btn-outline-primary">Modificar</button>
+                                </form>
+                                <form method="POST" action="eliminar.php" style="display: inline;">
+                                    <input type="hidden" name="erase" value="<?php echo $buyer->getName(); ?>">
+                                    <button type="submit" class="btn btn-outline-danger">Eliminar</button>
+                                </form>
+                            </div>
+
                         </td>
                     </tr>
                 <?php } ?>
             </tbody>
         </table>
+        <a href="menuopcion.php" class="btn btn-outline-primary">Tornar</a>
     </div>
 </body>
 <!--script Bootstrap-->

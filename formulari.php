@@ -1,6 +1,6 @@
 <?php
-session_start();
 require_once ("./conexions/autoload.php");
+
 
 $accio = (isset($_POST['accio'])) ? $_POST['accio'] : "";
 
@@ -16,9 +16,10 @@ switch ($accio) {
 
     if (!empty($txtNom)) {
       $registre = new User($txtNom, $txtCognoms, $txtEmail, $txtTypeUser, $txtPass);
-      $bd = new UserDAO('usuari', $con);
-      $data=$registre->getData();
-      $bd->insert($data);
+      $bd = new DaoUser($con->getPdo());
+      //$data=$registre->getData();
+      $bd->create($registre);
+      $con->closeConnection();
     } else {
       echo 'Error tenim un error btnAfegir';
     }
@@ -63,21 +64,20 @@ switch ($accio) {
   <div class="container">
     <div class="col-md-7 col-lg-8">
       <h4 class="mb-3">Dades Usuari</h4>
-      <form class="needs-validation" method="post">
+      <form action="" class="needs-validation" method="post">
         <div class="row g-3">
           <div class="col-sm-6">
-            <label for="firstName" class="form-label">Nom</label>
-            <input type="text" class="form-control" id="firstName" placeholder="Nom Usuari" value="" name="txtNom"
-              required>
+            <label for="alias" class="form-label">Alias</label>
+            <input type="text" class="form-control" id="alias" placeholder="Nom Usuari" value="" name="txtNom" required>
             <div class="invalid-feedback">
               Es necesari Nom.
             </div>
           </div>
 
           <div class="col-sm-6">
-            <label for="lastName" class="form-label">Cognoms</label>
-            <input type="text" class="form-control" id="lastName" placeholder=" escriu Cognoms" value=""
-              name="txtCognoms" required>
+            <label for="name" class="form-label">Nom</label>
+            <input type="text" class="form-control" id="name" placeholder=" escriu Cognoms" value="" name="txtCognoms"
+              required>
             <div class="invalid-feedback">
               Es necesari Cognoms.
             </div>
@@ -111,39 +111,12 @@ switch ($accio) {
             </div>
           </div>
           <hr class="my-4">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="save-info">
-            <label class="form-check-label" for="save-info">Guarda l'informació</label>
-          </div>
-          <hr class="my-4">
+
           <div class="buttons">
             <button class="btn btn-success btn-lg" type="submit" name="accio" value="btnAfegir">Aceptar</button>
-            <button class="btn btn-primary btn-lg" type="button" name="accio" value="btnCancelar">Cancelar</button>
-            <button class="btn btn-danger btn-lg" type="button" name="accio" value="btnEliminar">Eliminar</button>
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#confirmar">
-              Eliminar
-            </button>
+            <a href="index.php" class="btn btn-secondary btn-lg">Cancelar</a>
           </div>
-          <!-- Modal -->
-          <div class="modal fade" id="confirmar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar elimininació</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  posar dades Usuari
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button value="btnEliminar" type="button" class="btn btn-primary" name="accio">Aceptar</button>
-                </div>
-              </div>
-            </div>
-          </div>
+        </div>
       </form>
     </div>
   </div>

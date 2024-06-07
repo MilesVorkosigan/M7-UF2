@@ -1,6 +1,6 @@
 <?php
 
-// include ('./password.php');
+
 class User
 {
 	private $id;
@@ -16,7 +16,7 @@ class User
 		$this->surname = $surname;
 		$this->email = $email;
 		$this->adm = $adm;
-		$this->pass = password_hash($password, PASSWORD_DEFAULT, ['COST' => 10]);
+		$this->pass = $password;
 	}
 
 

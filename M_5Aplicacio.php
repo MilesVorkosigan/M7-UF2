@@ -1,6 +1,6 @@
 <?php
 //iniciem sessió
-session_start();
+require_once ("./conexions/autoload.php");
 $supermercat = array(
     array(
         "Id" => 1,
@@ -35,30 +35,6 @@ $supermercat = array(
 );
 $total = 0;
 
-define("TEMPSINACTIU", 200); //Segons màxims que pot estar l'aplicació inactiva
-
-
-
-//Temps transcorregut des de l'últim accés a la pàgina i la data actual.
-$tempsTranscorregut = time() - $_SESSION["ultimAcces"];
-
-
-if ($tempsTranscorregut >= TEMPSINACTIU) { //Si la sessió ha caducat, han passat 30 segons o més des de l'últim accés...
-    session_destroy(); //Destruim sessió
-    header("Location: M_5Caducitat.php"); //Mostrem la pàgina de caducitat
-} else { //Si no ha caducat...
-    $_SESSION["ultimAcces"] = time(); //Actualitzem la data per tornar a començar
-    $_SESSION['productes'] = $supermercat;
-
-    //comprovem si tenim cookies de la compra
-    foreach ($supermercat as $key => $dadesCompra) {
-
-        if (isset($_COOKIE[$dadesCompra['nom']])) {
-            print_r("Entrema cookies");
-            $_SESSION[$dadesCompra['nom']] = $_COOKIE[$dadesCompra['nom']];
-        }
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +46,7 @@ if ($tempsTranscorregut >= TEMPSINACTIU) { //Si la sessió ha caducat, han passa
 </head>
 
 <body>
-    <p>Benvingut/da <strong><?php echo $_SESSION["usuari"]; ?></strong></p>
+    <p>Benvingut/da <strong><?php echo $sessUser->getCurrentUser() ?></strong></p>
     <?php
     //cas que tinguem cookies
     if (isset($_COOKIE['usuari']) || isset($_COOKIE['contrasenya'])) {

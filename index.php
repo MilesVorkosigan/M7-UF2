@@ -1,3 +1,11 @@
+<?php 
+require_once ("./conexions/autoload.php");
+if (isset( $_SESSION['user'])) {
+   // header('Location : menuopcion.php');
+  }
+
+ 
+  ?>
 <!DOCTYPE html>
 <html lang="ca">
 
