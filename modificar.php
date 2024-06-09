@@ -113,7 +113,7 @@ switch ($accio) {
                         <input type="email" class="form-control" id="email" value="<?php echo $txtEmail ?>"
                             name="txtEmail" required>
                         <div class="invalid-feedback">
-                            Escriure vàlid fortma de correu.
+                            Escriure vàlid forma de correu.
                         </div>
                     </div>
 

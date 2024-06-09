@@ -34,10 +34,7 @@
                                 <label for="password">Password</label>
                             </div>
                             <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Aceptar</button>
-                            <div class="checkbox">
-                                <input type="checkbox" name="saveCookies" id="saveCookies" switch>
-                                <label for="saveCookies">Guardar contrasenya</label>
-                            </div>
+                            
                             <small class="text-body-secondary">Aceptar els termes us.</small>
                         </form>
                     </div>
