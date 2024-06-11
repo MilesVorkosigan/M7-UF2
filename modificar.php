@@ -2,16 +2,14 @@
 require_once ("./conexions/autoload.php");
 $userName = $sessUser->getCurrentUser();
 echo $userName;
+$nameChange = $userName;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['modificate'])) {
         $nameChange = $_POST['modificate'];
 
-        
-    }else{
-        $_POST['modificate']=$userName;
-        $nameChange=$userName;
-    }
+
+    } 
 
 
 }
@@ -32,17 +30,20 @@ $dadesModificades = false;
 switch ($accio) {
     case 'btnAfegir':
         echo
-        // $txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : "";
-        $txtNom = (isset($_POST['txtNom'])) ? $_POST['txtNom'] : " no rebu";
-        $txtCognoms = (isset($_POST['txtCognoms'])) ? $_POST['txtCognoms'] : "";
-        $txtEmail = (isset($_POST['txtEmail'])) ? $_POST['txtEmail'] : "";
-        $txtPass = (isset($_POST['txtPass'])) ? $_POST['txtPass'] : "";
-        $txtTypeUser = (isset($_POST['typeUser'])) ? ($_POST['typeUser'] == "admin" ? 1 : 0) : 0;
+            // $txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : "";
+        $txtNomRegistre = (isset($_POST['txtNom'])) ? $_POST['txtNom'] : " no rebu";
+        $txtCognomsRegistre = (isset($_POST['txtCognoms'])) ? $_POST['txtCognoms'] : "";
+        $txtEmailRegistre = (isset($_POST['txtEmail'])) ? $_POST['txtEmail'] : "";
+        $txtPassRegistre = (isset($_POST['txtPass'])) ? $_POST['txtPass'] : "";
+        $txtTypeUserRegistre = (isset($_POST['typeUser'])) ? ($_POST['typeUser'] == "admin" ? 1 : 0) : 0;
 
 
         if (!empty($txtNom)) {
-            $registre = new User($txtNom, $txtCognoms, $txtEmail, $txtTypeUser, $txtPass);
+           
+            $registre = new User($txtNomRegistre, $txtCognomsRegistre, $txtEmailRegistre, $txtTypeUserRegistre, $txtPassRegistre);
+
             $bd = new DaoUser($con->getPdo());
+            $idUser=$bd->getIdByAlias($txtNomRegistre);
             $bd->update($registre, $idUser);
             $con->closeConnection();
             $dadesModificades = true;
@@ -87,6 +88,7 @@ switch ($accio) {
 <body>
     <div class="container">
         <div class="col-md-7 col-lg-8">
+            <h2 class="mb-3">Administrador <?php echo $userName ?></>
             <h4 class="mb-3">Dades Usuari <?php echo $idUser ?></h4>
             <form action="" class="needs-validation" method="post">
                 <div class="row g-3">
@@ -126,11 +128,16 @@ switch ($accio) {
                         <label for="admin" class="form-label">Tipus Usuari</label>
                         <select class="form-select" id="typeUser" name="typeUser" value="" required>
                             <option value="">Escull</option>
-                            <option value="admin"<?php if($txtTypeUser=='admin'){echo "selected";}?>>Administrador</option>
-                            <option value="comp"<?php if($txtTypeUser!='admin'){echo "selected";}?>>Comprador</option>
+                            <option value="admin" <?php if ($txtTypeUser == 'admin') {
+                                echo "selected";
+                            } ?>>Administrador
+                            </option>
+                            <option value="comp" <?php if ($txtTypeUser != 'admin') {
+                                echo "selected";
+                            } ?>>Comprador</option>
                         </select>
                         <div class="invalid-feedback">
-                            Please select type user.
+                            Selecciona tipus usuari.
                         </div>
                     </div>
                     <hr class="my-4">

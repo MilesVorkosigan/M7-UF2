@@ -53,11 +53,11 @@ $total = 0;
         echo ('<p> <a href="M_5BorrarCookies.php">Borrar Galetes</a></p>');
         echo ('<p><a href="M_5EliminarCompra">Eliminar Compra</a><</p>');
     } else {
-        echo ('<p><a href="index.php">Tornar Inici</a></p>');
+        echo ('<p><a href="menuopcion.php">Tornar Menu</a></p>');
         echo ('<h4>Has entrar sense Galetes</h4>');
     }
     //editar taula de productes
-
+    
     ?>
     <form method="POST" action="M_5Comprar.php">
         <table border="1">
@@ -76,14 +76,14 @@ $total = 0;
             <?php foreach ($supermercat as $key => $dadesCompra) {
                 $quantitat = isset($_SESSION[$dadesCompra['nom']]) ? $_SESSION[$dadesCompra['nom']] : 0;
                 echo "<tr><td>" . $dadesCompra["Id"] . "</td><td>" . $dadesCompra["nom"] . "</td><td>" . $dadesCompra["preu"]
-                    . ' €</td><td> <input type="number" name="quantitat'.$dadesCompra['Id'].'" value='
+                    . ' €</td><td> <input type="number" name="quantitat' . $dadesCompra['Id'] . '" value='
                     . strval($quantitat) . ' min="0" max="10" /></td>';
                 $total += $dadesCompra["preu"] * $quantitat;
             }
             ?>
         </table>
         <h3>Total compra: <?php echo ($total) ?></h3>
-        <input type="submit"  value="Enviar" />
+        <input type="submit" value="Enviar" />
     </form>
     <p><a href="M_5Logout.php">Tanca la sessió</a></p>
 </body>

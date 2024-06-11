@@ -27,6 +27,7 @@ class DaoUser
     public function update(User $user,$idUser)
     {
         $stmt = $this->pdo->prepare("UPDATE usuari SET alias = ?, name = ?, email = ?, contrasenya = ?, admin = ? WHERE id = ?");
+        echo($idUser);
         $hash = hash('sha256', $user->getPass());
         return $stmt->execute([$user->getName(), $user->getSurname(), $user->getEmail(), $hash, $user->getAdm(), $idUser]);
     }
